@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mimizu Game</title>
+    <link rel="stylesheet" href="./mimizu.css">
+</head>
+<body>
+    <h1>みみず</h1>
+    <p>ハイスコア：<span id="high-score-area"></span>点</p>
+    <div id="start-button">
+        <button onclick="startGame()">スタート!</button>
+        <p>(ボタンを押した瞬間にスタートするので心の準備をお願いします)</p>
+        <h3>遊び方</h3>
+        <p>
+            矢印キーを押してみみずを操作し、フィールド上のアイテムを獲得しよう！<br>
+            30秒以内にいくつ獲得できるかな？
+        </p>
+        <h3>このページについて</h3>
+        <p>
+            このページではハイスコア保存のためにCookieを使用しています。
+        </p>
+    </div>
+    <div id="game-area" style="visibility: hidden;">
+        <p>現在<span id="point-area"></span>点</p>
+        <p>残り<span id="time-area"></span>秒</p>
+        <canvas width="200", height="200" id="game-field"></canvas>
+    </div>
+    <script src="./mimizu.js"></script>
+    
+</body>
+</html>
