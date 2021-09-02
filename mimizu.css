@@ -9,3 +9,17 @@ canvas {
 button {
     font-size: larger;
 }
+
+/* 4方向にいい感じにボタンを表示する方法あれば教えて下さい。。。 */
+#button-up {
+    width: 200px;
+}
+
+#button-down {
+    width: 200px;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+}

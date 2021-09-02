@@ -26,7 +26,16 @@
     <div id="game-area" style="visibility: hidden;">
         <p>現在<span id="point-area"></span>点</p>
         <p>残り<span id="time-area"></span>秒</p>
-        <canvas width="200", height="200" id="game-field"></canvas>
+        <div class="column">
+            <button id="button-up">↑</button>
+            <p class="row">
+                <button id="button-left">←</button>
+                <canvas width="200", height="200" id="game-field"></canvas>
+                <button id="button-right">→</button>
+            </p>
+            <button id="button-down">↓</button>
+        </div>
+        
     </div>
     <script src="./mimizu.js"></script>
     

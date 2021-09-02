@@ -18,6 +18,10 @@ const start_button = document.getElementById("start-button");
 const point_area = document.getElementById("point-area");
 const high_score_area = document.getElementById("high-score-area");
 const time_area = document.getElementById("time-area");
+const button_up = document.getElementById("button-up");
+const button_down = document.getElementById("button-down");
+const button_left = document.getElementById("button-left");
+const button_right = document.getElementById("button-right");
 
 
 // クラスSnakeの定義
@@ -197,11 +201,16 @@ function getHighScoreFromCookie() {
  */
 const _sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+
+
 // =====メイン処理==========================================================-
 
 // Cookieを取得してハイスコアを設定する
 let high_score = getHighScoreFromCookie();
 high_score_area.innerText = high_score.toString();
+
+// ハイスコアが更新されたかを表す変数
+let hasHighScoreSet = false;
 
 function startGame() {
     // スタートボタンを非表示
@@ -237,6 +246,9 @@ function startGame() {
         let time_remained = (time_goal - Date.now()) / 1000;
         if (time_remained <= 0) {
             time_remained = 0;
+            let msg = "ゲーム終了!\nスコア: " + snake.getPoint().toString() + "点";
+            if (hasHighScoreSet) msg += "\nハイスコア更新!!";
+            alert(msg);
             clearInterval(timer);
         }
         time_area.innerText = time_remained;
@@ -249,6 +261,7 @@ function startGame() {
         if (snake.isCollision(dot.getX(), dot.getY())) {
             snake.incrementPoint(); // ポイントを加算
             if (snake.getPoint() > high_score) {
+                hasHighScoreSet = true;
                 high_score = snake.getPoint();
                 high_score_area.innerText = high_score.toString();
             }
@@ -276,6 +289,21 @@ function startGame() {
         } else if (event.key == "ArrowRight") {
             snake.setDirection(dot_width, 0);
         }
+    });
+
+    // ボタンのイベントリスナの設定 -- スマホ対応
+    // なぜか普通に関数を渡しただけでは動かない 無名関数に直してやっと動いた
+    button_up.addEventListener("click", () => {
+        snake.setDirection(0, -dot_height);
+    });
+    button_down.addEventListener("click", () => {
+        snake.setDirection(0, dot_height);
+    });
+    button_left.addEventListener("click", () => {
+        snake.setDirection(-dot_width, 0);
+    });
+    button_right.addEventListener("click", () => {
+        snake.setDirection(dot_width, 0);
     });
 }
 
