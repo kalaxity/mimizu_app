@@ -2,11 +2,7 @@
 俗にいうSnake Gameです。  
 こちら → https://kalaxity.github.io/mimizu_app/mimizu.html
 
-### ToDo
-* jsファイルを分割して見やすくする
-* ゲーム開始時にカウントダウンを表示する(むずかしい)
-
-### 学んだことについてメモ
+## 学んだことについてメモ
 * ローカル環境ではCookieが使えない(chromeだけらしいが)  
 > https://qiita.com/syukan3/items/dd907b7cd3ed86025546
 
