@@ -24,8 +24,8 @@ const button_left = document.getElementById("button-left");
 const button_right = document.getElementById("button-right");
 
 
-// クラスSnakeの定義
-class Snake {
+// クラスWormの定義
+class Worm {
     /**
      * コンストラクタ
      * @param {Number} length Snakeの長さ 
@@ -55,7 +55,7 @@ class Snake {
     }
 
     /**
-     * Snakeを設定された移動量だけ移動させる
+     * Wormを設定された移動量だけ移動させる
      */
     move() {
         // x, yにdx, dyを加算
@@ -72,7 +72,7 @@ class Snake {
     }
 
     /**
-     * Snakeの先頭の点の移動量を変更する
+     * Wormの先頭の点の移動量を変更する
      * @param {Number} dx 先頭の点のx方向の移動量
      * @param {Number} dy 先頭の点のy方向の移動量
      */
@@ -83,7 +83,7 @@ class Snake {
     }
 
     /**
-     * Snakeの各点の移動量を更新する  
+     * Wormの各点の移動量を更新する  
      * * 具体的には、各点の移動量が入った配列をシフトする
      */
     shiftDirection() {
@@ -95,7 +95,7 @@ class Snake {
     }
 
     /**
-     * Snakeを描画する  
+     * Wormを描画する  
      * 先頭は色を変えて描画する
      */
     draw() {
@@ -114,7 +114,7 @@ class Snake {
     }
 
     /**
-     * (x, y)にある点と衝突しているか
+     * Wormが(x, y)にある点と衝突しているか
      * @param {Number} x 点のx座標
      * @param {Number} y 点のy座標
      * @returns {Boolean} 衝突しているならtrue
@@ -237,16 +237,16 @@ function startGame() {
     let time_goal = Date.now() + 30 * 1000;
 
     // インスタンスの生成
-    let snake = new Snake(snake_length, dot_width, 0);
+    let worm = new Worm(snake_length, dot_width, 0);
     let dot = new Dot();
 
     // 衝突していたら点の位置を変える
-    while (snake.isCollision(dot.getX(), dot.getY())) {
+    while (worm.isCollision(dot.getX(), dot.getY())) {
         dot.changePosition();
     }
 
     // 点数表示を初期化
-    point_area.innerText = snake.getPoint().toString();
+    point_area.innerText = worm.getPoint().toString();
 
     // 一定時間ごとに実行する内容を書く
     let timer = setInterval(() => {
@@ -254,7 +254,7 @@ function startGame() {
         let time_remained = (time_goal - Date.now()) / 1000;
         if (time_remained <= 0) {
             time_remained = 0;
-            let msg = "ゲーム終了!\nスコア: " + snake.getPoint().toString() + "点";
+            let msg = "ゲーム終了!\nスコア: " + worm.getPoint().toString() + "点";
             if (hasHighScoreSet) msg += "\nハイスコア更新!!";
             alert(msg);
             clearInterval(timer);
@@ -262,26 +262,26 @@ function startGame() {
         time_area.innerText = time_remained;
 
         // 移動方向を更新してから移動する
-        snake.shiftDirection();
-        snake.move();
+        worm.shiftDirection();
+        worm.move();
 
         // 衝突判定
-        if (snake.isCollision(dot.getX(), dot.getY())) {
-            snake.incrementPoint(); // ポイントを加算
-            if (snake.getPoint() > high_score) {
+        if (worm.isCollision(dot.getX(), dot.getY())) {
+            worm.incrementPoint(); // ポイントを加算
+            if (worm.getPoint() > high_score) {
                 hasHighScoreSet = true;
-                high_score = snake.getPoint();
+                high_score = worm.getPoint();
                 high_score_area.innerText = high_score.toString();
             }
             document.cookie = "high_score=" + high_score.toString() + ";max-age=31536000";
-            while (snake.isCollision(dot.getX(), dot.getY())) {
+            while (worm.isCollision(dot.getX(), dot.getY())) {
                 dot.changePosition();
             }
-            point_area.innerText = snake.getPoint().toString();
+            point_area.innerText = worm.getPoint().toString();
         }
 
         // 画面に表示する
-        snake.draw();
+        worm.draw();
         dot.draw();
     }, 100);
 
@@ -289,29 +289,29 @@ function startGame() {
     // イベントリスナの設定 -- 矢印キーの受付について
     document.addEventListener("keydown", (event) => {
         if (event.key == "ArrowUp") {
-            snake.setDirection(0, -dot_height);
+            worm.setDirection(0, -dot_height);
         } else if (event.key == "ArrowDown") {
-            snake.setDirection(0, dot_height);
+            worm.setDirection(0, dot_height);
         } else if (event.key == "ArrowLeft") {
-            snake.setDirection(-dot_width, 0);
+            worm.setDirection(-dot_width, 0);
         } else if (event.key == "ArrowRight") {
-            snake.setDirection(dot_width, 0);
+            worm.setDirection(dot_width, 0);
         }
     });
 
     // ボタンのイベントリスナの設定 -- スマホ対応
     // なぜか普通に関数を渡しただけでは動かない 無名関数に直してやっと動いた
     button_up.addEventListener("click", () => {
-        snake.setDirection(0, -dot_height);
+        worm.setDirection(0, -dot_height);
     });
     button_down.addEventListener("click", () => {
-        snake.setDirection(0, dot_height);
+        worm.setDirection(0, dot_height);
     });
     button_left.addEventListener("click", () => {
-        snake.setDirection(-dot_width, 0);
+        worm.setDirection(-dot_width, 0);
     });
     button_right.addEventListener("click", () => {
-        snake.setDirection(dot_width, 0);
+        worm.setDirection(dot_width, 0);
     });
 }
 
