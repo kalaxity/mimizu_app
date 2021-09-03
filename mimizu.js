@@ -99,16 +99,18 @@ class Snake {
      * 先頭は色を変えて描画する
      */
     draw() {
+        // 画面消去
         ctx.clearRect(0, 0, field_width, field_height);
+        
+        // 先頭以外の点を先に描画する
+        ctx.fillStyle = "Green";
         for (let i = 1; i < this.length; ++i) {
             ctx.fillRect(this.x[i], this.y[i], dot_width, dot_height);
         }
-
-        // 先頭の点だけ色を変えて描画する  
-        // 後ろの点と重なった時に先頭点の色を優先するため、先頭の点は最後に描画している
+  
+        // 後ろの点と重なった時に先頭点の色を優先するため、先頭の点は最後に描画する
         ctx.fillStyle = "darkorange";
         ctx.fillRect(this.x[0], this.y[0], dot_width, dot_height);
-        ctx.fillStyle = "Green";
     }
 
     /**
@@ -202,6 +204,32 @@ function getHighScoreFromCookie() {
 const _sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 
+/**
+ * Canvasの表示やカウントダウンをする関数
+ */
+function initGame() {
+    // スタートボタンを非表示
+    start_button.style.display = "none";
+    // ゲームエリアを表示
+    game_area.style.visibility = "visible";
+
+    // カウントダウン処理
+    let count = 4;
+    ctx.font = "128px serif";
+    ctx.textAlign = "center";       // 基準点を横方向の中央に合わせる
+    ctx.textBaseline = "middle";    // 基準点を縦方向の中央に合わせる
+    let countDownInterval = setInterval(() => {
+        ctx.clearRect(0, 0, field_width, field_height);
+        count--;
+        if (count > 0) {
+            ctx.fillText(count.toString(), 100, 100);
+        } else {
+            clearInterval(countDownInterval);
+            startGame();
+        }
+    }, 1000);
+}
+
 
 // =====メイン処理==========================================================-
 
@@ -213,11 +241,6 @@ high_score_area.innerText = high_score.toString();
 let hasHighScoreSet = false;
 
 function startGame() {
-    // スタートボタンを非表示
-    start_button.style.display = "none";
-    // ゲームエリアを表示
-    game_area.style.visibility = "visible";
-
     // カウントダウンしたいがむずかしい
     // for (let i = 3; i > 0; --i) {
     //     console.log(2);
