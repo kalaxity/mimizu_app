@@ -197,25 +197,17 @@ function getHighScoreFromCookie() {
 }
 
 /**
- * 指定した時間だけ待機する関数  
- * copied from https://hirooooo-lab.com/development/javascript-sleep/
- * @param {Number} ms 待機する時間(ミリ秒)
- */
-const _sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-
-/**
  * Canvasの表示やカウントダウンをする関数
  */
 function initGame() {
     // スタートボタンを非表示
     start_button.style.display = "none";
     // ゲームエリアを表示
-    game_area.style.visibility = "visible";
+    game_area.style.display = "block";
 
     // カウントダウン処理
     let count = 4;
-    ctx.font = "128px serif";
+    ctx.font = "128px serif";       // canvasに表示するフォントの大きさの変更
     ctx.textAlign = "center";       // 基準点を横方向の中央に合わせる
     ctx.textBaseline = "middle";    // 基準点を縦方向の中央に合わせる
     let countDownInterval = setInterval(() => {
@@ -241,13 +233,6 @@ high_score_area.innerText = high_score.toString();
 let hasHighScoreSet = false;
 
 function startGame() {
-    // カウントダウンしたいがむずかしい
-    // for (let i = 3; i > 0; --i) {
-    //     console.log(2);
-    //     ctx.fillText(i.toString(), 0, 0, field_width);
-    //     _sleep(1000);
-    // }
-
     // 現在時刻から30秒後の時刻を取得
     let time_goal = Date.now() + 30 * 1000;
 
