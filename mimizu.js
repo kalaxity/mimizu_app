@@ -167,6 +167,7 @@ class Dot {
      * ドットを描画する関数
      */
     draw() {
+        ctx.fillStyle = "Red";
         ctx.fillRect(this.x, this.y, dot_width, dot_height);
     }
 
